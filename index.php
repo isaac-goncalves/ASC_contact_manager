@@ -76,7 +76,7 @@
                 bg-white
              ">
 
-                <h2 class="text-xl font-bold">Sidebar</h2>
+                <?php include 'sidebar.html'; ?>
                 <!-- Add sidebar content here -->
             </div>
         </div>
@@ -133,34 +133,33 @@
                 </div>
 
                 <div>
-                    <button id="show-toast"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Show success
-                        toast</button>
-                </div>
 
-            </div>
+                    <div>
+                        <p>
+                            Erro ao inserir contato na linha 43 do CSV
+                        </p>
+                    </div>
 
-            <div class="container mx-auto mt-10
-            px-4 bg-white shadow-md rounded px-8 py-6
-            ">
-                <h1 class="text-2xl font-semibold 
-                text-center mb-4
-                ">Contacts List</h1>
-                <!-- PHP script to fetch and display data -->
-                <?php
-                include 'fetch_data.php';
-                ?>
-                
-            </div>
-        </div>
-    </div>
+                    <div>
+                        <p>
+                            Contato duplicado na linha 43 do CSV
+                        </p>
+                        <div>
+                            <p>
+                                Telefone inválido na linha 43 do CSV
+                            </p>
+                            <div>
+                                <button
+                                    class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline send_button">download
+                                    do CSV com os erros</button>
+                            </div>
+                        </div>
 
+                        <script type="text/javascript" src="js/scripts.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <script type="text/javascript" src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <!-- No Bootstrap JS needed with Tailwind CSS -->
+                        <!-- No Bootstrap JS needed with Tailwind CSS -->
 </body>
 
 

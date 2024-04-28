@@ -3,8 +3,6 @@
 window.addEventListener('load', function () {
     console.log('loaded')
 
-
-
     function initializePage() {
         console.log('Page initialized')
         setEventListener()
