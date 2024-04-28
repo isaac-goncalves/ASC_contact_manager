@@ -8,9 +8,10 @@ header(
 
 if (isset($_POST["Import"])) {
 
+
     $con = getdb();
 
-    $filename = $_FILES["fileInput"]["tmp_name"];
+    $fileInput = $_FILES["fileInput"]["tmp_name"];
     $campaign = $_POST['campaign'];
     $successCount = 0; // Initialize success count
     $duplicateCount = 0; // Initialize duplicate count
@@ -22,7 +23,7 @@ if (isset($_POST["Import"])) {
         $error = "Por favor, insira o nome da campanha.";
     }
     
-    if ($filename == "") {
+    if ($fileInput == "") {
         $error = "Por favor, selecione um arquivo CSV.";
     }
 
@@ -33,9 +34,10 @@ if (isset($_POST["Import"])) {
     }
 
     if ($_FILES["fileInput"]["size"] > 0) {
-        $file = fopen($filename, "r");
+        
+        $file = fopen($fileInput, "r");
 
-        error_log("Amount of rows in csv is ");
+        // error_log("Amount of rows in csv is ");
 
         while (($getData = fgetcsv($file, 100000, ";")) !== false) {
 
@@ -93,9 +95,7 @@ if (isset($_POST["Import"])) {
         // Encode the data into JSON format
         $jsonData = json_encode($response);
 
-        // Output the JSON data without redirect
-
-
+        // Output the JSON data without redirececting
         
         echo $jsonData;
 

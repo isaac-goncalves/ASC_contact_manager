@@ -1,4 +1,9 @@
-window.onload = function () {
+"use strict";
+
+window.addEventListener('load', function () {
+    console.log('loaded')
+
+
 
     function initializePage() {
         console.log('Page initialized')
@@ -9,122 +14,122 @@ window.onload = function () {
     function setEventListener() {
 
         console.log('event listener set')
-        const uploadButton = document.getElementById('upload-button')
-        const uploadInput = document.getElementById('upload-input')
+        const uploadForm = document.getElementById('uploadForm')
 
-        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+        //show loading spinner
+        const loadingSpinner = document.getElementById('loading-spinner')
+        const submitButton = document.getElementById('submit-button')
+
+        uploadForm.addEventListener('submit', function (e) {
             e.preventDefault(); // Prevent the default form submission behavior
-            // e.stopPropagation();
-            return console.log('form submitted')
-            // Create FormData object to send form data asynchronously
-            // var formData = new FormData(this);
 
-            // // Submit the form data using Fetch API
-            //  fetch(
-            //     './functions.php', {
-            //     method: 'POST',
-            //     body: formData
-            // })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Network response was not ok');
-            //         }
-            //         return response.json();
-            //     })
-            //     .then(data => {
-            //         // Display success message from response
+            // Display the loading spinner
+            loadingSpinner.style.display = 'block';
+            //add tailwind disabled class to button
+            submitButton.classList.add('disabled')
+            submitButton.disabled = true;
 
-            //         const sucessAmount = data.successAmount
-            //         const invalidPhoneCount = data.errorAmount
-            //         const infoAmount = data.duplicateAmount
+            const formData = new FormData(this)
+            formData.append('Import', 'true')
 
-            //         if (sucessAmount > 0) {
-            //             showSuccessMessage(sucessAmount)
-            //         }
-            //         if (infoAmount > 0) {
-            //             showInfoToast(infoAmount)
-            //         }
-            //         if (invalidPhoneCount > 0) {
-            //             showErrorMessage(invalidPhoneCount)
-            //         }
+            formData.forEach((value, key) => {
+                console.log(key + ': ' + value);
+            });
 
-            //         // Clear the form fields after successful submission
-            //         // document.getElementById('uploadForm').reset
+            fetch('./functions.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Display success message from response
 
-            //     })
-            //     .catch(error => {
-            //         // Display error message
-            //         toastr.error('An error occurred while uploading the CSV file.');
-            //         console.error(error);
-            //     });
+                    const sucessAmount = data.successAmount
+                    const invalidPhoneCount = data.errorAmount
+                    const infoAmount = data.duplicateAmount
+
+                    if (sucessAmount > 0) {
+                        showSuccessMessage(sucessAmount)
+                    }
+                    if (infoAmount > 0) {
+                        showInfoToast(infoAmount)
+                    }
+                    if (invalidPhoneCount > 0) {
+                        showErrorMessage(invalidPhoneCount)
+                    }
+
+                    //hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    submitButton.disabled = false;
+
+                    // Clear the form fields after successful submission
+                    uploadForm.reset
+
+                })
+                .catch(error => {
+                    // Display error message
+                    toastr.error('An error occurred while uploading the CSV file.');
+                    console.error(error);
+                });
         });
+    }
+
+    const showToastButton = document.getElementById('show-toast');
+
+
+    showToastButton.addEventListener('click', function () {
+
+        console.log('clicked')
+        toastr["success"](
+            `teste contatos foram inseridos com sucesso!`
+        )
+
+    })
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
     }
 
 
     function showSuccessMessage(amount) {
 
-        const showToastButton = document.getElementById('show-toast');
+        toastr["success"](
+            `${amount} contatos foram inseridos com sucesso!`
+        )
 
-        showToastButton.addEventListener('click', function () {
-
-            console.log('clicked')
-            toastr["success"](
-                `${amount} contatos foram inseridos com sucesso!`
-            )
-
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-
-        })
     }
 
     function showInfoToast(amount) {
 
-        const showToastButton = document.getElementById('show-toast');
+        toastr["info"](
+            `${amount} contatos já existem na base de dados!`)
 
-        showToastButton.addEventListener('click', function () {
 
-            console.log('clicked')
-            toastr["info"](`${amount} contatos já existem na base de dados!`)
-
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-
-        })
     }
 
     function showErrorMessage(amount) {
-        toastr.error(`${amount} contatos não foram inseridos por conterem números inválidos!`)
+
+        toastr.error(
+            `${amount} contatos não foram inseridos por conterem números inválidos!`)
     }
 
     //implementar inserção de intems com telefone inválido em uma tabela de relatorio
@@ -144,4 +149,4 @@ window.onload = function () {
         })
     }
 
-}
+})
