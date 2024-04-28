@@ -9,7 +9,6 @@ try {
     $conn = mysqli_connect($servername, $username, $password, $db);
     //  echo "Connected successfully"; 
      //command to see logs at 
-    error_log("Connected successfully");
     }
 catch(exception $e)
     {
@@ -17,5 +16,3 @@ catch(exception $e)
     }
     return $conn;
 }
-echo "Connected successfully";
-?>

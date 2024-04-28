@@ -4,7 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Toastr JS -->
+
+    <!-- //cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <title>Upload de Arquivo CSV - ASC Brazi</title>
+
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -14,25 +21,25 @@
             background-color: var(--e-global-color-primary);
         }
 
-        .send_button{
+        .send_button {
             background-color: var(--e-global-color-primary);
 
-            
+
         }
-        
-        .send_button:hover{
+
+        .send_button:hover {
             background-color: var(--e-global-color-ec068f9);
         }
 
-        :root  {
+        :root {
             --e-global-color-primary: #66197E;
             --e-global-color-secondary: #0073AD;
             --e-global-color-text: #5E5E5E;
             --e-global-color-accent: #66197E;
             --e-global-color-ec068f9: #E7B829;
         }
-
     </style>
+
 </head>
 
 
@@ -88,7 +95,7 @@
                             <div class="max-w-lg mx-auto">
                                 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                                     <h2 class="text-xl font-semibold mb-4">Upload de Arquivo CSV</h2>
-                                    <form action="functions.php" method="POST" name="upload_excel"
+                                    <form id="uploadForm" action="functions.php" enctype="multipart/form-data" method="POST" name="upload_excel"
                                         enctype="multipart/form-data">
                                         <div class="mb-4">
                                             <label for="fileInput"
@@ -113,15 +120,28 @@
                         </div>
                     </form>
                 </div>
+
+                <div>
+                    <button id="show-toast"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Show success
+                        toast</button>
+                </div>
+
                 <div class="container mx-auto mt-10">
                     <h1 class="text-2xl font-semibold">Contacts List</h1>
                     <!-- PHP script to fetch and display data -->
-                    <?php include 'fetch_data.php'; ?>
+                    include 'fetch_data.php';
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="js/scripts.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <!-- No Bootstrap JS needed with Tailwind CSS -->
 </body>
+
 
 </html>
