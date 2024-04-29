@@ -57,6 +57,8 @@ if (isset($_POST["Import"])) {
 
         while (($getData = fgetcsv($file, 100000, ";")) !== false) {
 
+
+
             // Skip the first row
             if ($firstRow) {
                 $firstRow = false;
@@ -90,7 +92,7 @@ if (isset($_POST["Import"])) {
                     'endereco' => $endereco,
                     'cidade' => $cidade,
                     'cep' => $cep,
-                    'data_nascimento' => $data_nascimento,
+                    'data_nascimento' => $data_nascimento 
                 );
 
 
@@ -117,8 +119,8 @@ if (isset($_POST["Import"])) {
         // Prepare data to return as JSON object
         $response = array(
             'successAmount' => $successCount,
-            'infoAmount' => $duplicateCount,
-            'errorAmount' => $invalidPhoneCount,
+            'duplicateCount' => $duplicateCount,
+            'invalidPhoneCount' => $invalidPhoneCount,
             'invalidPhoneData' => $invalidPhoneData
         );
 
