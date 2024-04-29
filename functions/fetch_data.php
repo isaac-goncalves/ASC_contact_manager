@@ -4,12 +4,18 @@ include '../config/config.php';
 
 $conn = getdb();
 
-//grab get data
+// Initialize variables
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
 
+$itemsPerPage = isset($_GET['itemsPerPage']) && is_numeric($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
+
+$offset = ($page - 1) * $itemsPerPage;
+
+// Grab get data
 $sql = '';
 
-if (!isset($_GET['campaing_id'])) {
 
+if (!isset($_GET['campaing_id'])) {
     $sql = "SELECT 
             contacts.id,
             campaings.nome as campanha,
@@ -23,12 +29,11 @@ if (!isset($_GET['campaing_id'])) {
             contacts.data_nascimento
         FROM contacts
         INNER JOIN campaings ON contacts.campaing_id = campaings.id
-";
-
+        LIMIT $offset, $itemsPerPage";
 } else {
     $campaing_id = $_GET['campaing_id'];
 
-    // Fetch data from MySQL database
+    // Fetch data from MySQL database with pagination
     $sql = "SELECT 
             contacts.id,
             campaings.nome as campanha,
@@ -43,21 +48,15 @@ if (!isset($_GET['campaing_id'])) {
         FROM contacts
         INNER JOIN campaings ON contacts.campaing_id = campaings.id
         WHERE campaings.id = $campaing_id
-";
-
-    
-
+        LIMIT $offset, $itemsPerPage";
 }
 
 $result = $conn->query($sql);
 
 // Check if there are rows returned
 if ($result->num_rows > 0) {
-
+ 
     // Output data in JSON format masking phone and date
-
-    $row = $result->fetch_assoc();
-
     $contacts = array();
 
     while ($row = $result->fetch_assoc()) {
@@ -65,47 +64,28 @@ if ($result->num_rows > 0) {
         $row['data_nascimento'] = maskDate($row['data_nascimento']);
         $contacts[] = $row;
     }
-    echo json_encode($contacts);
 
+    //findLastPage
 
-    // // Output data in HTML table format
-    // echo '<div class="overflow-x-auto">';
-    // echo '<table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">';
-    // echo '<thead class="bg-gray-50 border-b border-gray-200">';
-    // echo '<tr>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Campanha</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sobrenome</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefone</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Endereço</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cidade</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CEP</th>';
-    // echo '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data de Nascimento</th>';
-    // echo '</tr>';
-    // echo '</thead>';
-    // echo '<tbody class="divide-y divide-gray-200">';
-    // while ($row = $result->fetch_assoc()) {
-    //     echo '<tr>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["id"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["campanha"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["nome"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["sobrenome"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["email"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . maskPhone($row["telefone"]) . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["endereco"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["cidade"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap">' . $row["cep"] . '</td>';
-    //     echo '<td class="px-6 py-4 whitespace-nowrap text-center">' . maskDate($row["data_nascimento"]) . '</td>';
-    //     echo '</tr>';
-    // }
-    // echo '</tbody>';
-    // echo '</table>';
-    // echo '</div>';
+    $sql = "SELECT COUNT(*) AS total FROM contacts";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $totalItems = $row['total'];
+    $totalPages = ceil($totalItems / $itemsPerPage);
+
+   $response = array(
+        'contacts' => $contacts,
+        'totalItems' => $totalItems,
+        'totalPages' => $totalPages
+    );
+
+    echo json_encode($response);
 } else {
-    echo json_encode(array());
+    echo json_encode(['contacts' => [], 'totalItems' => 0, 'totalPages' => 0]);
 }
+
+// Close database connection
+$conn->close();
 
 function maskPhone($phone)
 {
@@ -121,7 +101,4 @@ function maskDate($date)
 {
     return date('d/m/Y', strtotime($date));
 }
-
-
-// Close database connection
-$conn->close();
+?>

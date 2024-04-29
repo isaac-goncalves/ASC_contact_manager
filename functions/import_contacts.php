@@ -80,7 +80,10 @@ if (isset($_POST["Import"])) {
             $data_nascimento = isset($getData[7]) && !empty($getData[7]) ? date('Y-m-d', strtotime($getData[7])) : null;
 
             // Check if phone number is valid Brazilian number starting with 55
-            if (!preg_match('/^55\d{2}\d{4,5}\d{4}$/', $telefone)) {
+
+            $validadeNumber =  validateNumber($telefone);
+
+            if (!$validadeNumber) {
                 // Increment invalid phone number count
                 $invalidPhoneCount++;
                 // Add invalid phone number data to array
@@ -94,7 +97,6 @@ if (isset($_POST["Import"])) {
                     'cep' => $cep,
                     'data_nascimento' => $data_nascimento 
                 );
-
 
             } else {
                 // Insert data into the database
@@ -138,4 +140,52 @@ if (isset($_POST["Import"])) {
     );
     $jsonData = json_encode($response);
     echo $jsonData;
+}
+
+function validateNumber($phone)
+{
+
+    $valido = true;
+    $mobile = false;
+
+    //remove all characters except numbers
+    $phone = preg_replace('/[^0-9]/', '', $phone);
+
+    //validadte id only numbers 
+
+    if (!is_numeric($phone)) {
+        $valido = false;
+    }
+
+    //error if doesn't start with 55
+
+    if (substr($phone, 0, 2) != '55') {
+        $valido = false;
+    }
+
+    //validade if the phone is mobile or not
+
+    if (substr($phone, 4, 1) == '9') {
+        $mobile = true;
+    }
+
+    //validade if the phone has 10 or 11 digits
+
+    if ($mobile) {
+        if (strlen($phone) != 13) {
+            $valido = false;
+        }
+    } else { 
+        if (strlen($phone) != 12) {
+            $valido = false;
+        }
+    }
+
+    if ($valido) {
+        return true;
+    } else {
+        return false;
+    }
+
+
 }

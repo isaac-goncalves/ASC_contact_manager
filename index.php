@@ -63,7 +63,7 @@
         <?php include 'sidebar.html'; ?>
 
         <!-- Main Content -->
-        <div class="flex-1">
+        <div class="flex-1 ml-60 overflow-y-auto">
             <!-- Header -->
             <header class=" text-white py-4 px-6 header-color">
                 <div class="flex items-center">
@@ -72,7 +72,9 @@
                 <!-- Add header content here -->
             </header>
             <!-- Main Content Area -->
-            <div class="container mx-auto mt-10 px-4 ">
+            <div class="container mx-auto mt-10 px-4 
+                
+            ">
                 <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 py-6">
                     <h2 class="text-2xl font-semibold text-center mb-4">Upload de contatos da campanha</h2>
                     <form id="uploadForm" action="functions.php" method="POST" name="upload_excel"
