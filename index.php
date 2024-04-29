@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="./assets/favicon.png" type="image/png"/>
-    
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/png" />
+
     <!-- papa js-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -104,15 +104,19 @@
                                         <div id="sendButtonAndSpinnerWrapper" class="flex 
                                         justify-end  
                                         ">
-                                            <div id="loading-spinner"
-                                                style="display: none; text-align: center; margin-top: 20px;"
-                                                class="mt-4">
-                                                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
-                                                    role="status">
-                                                    <span
-                                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-                                                </div>
+                                            <div id='loadingSpinner' class="flex justify-center items-center w-full  "
+                                                style="display: none;">
+                                                <svg class="animate-spin ml-1 mr-3 h-5 w-5 text-black"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                        stroke="currentColor" stroke-width="4">
+                                                    </circle>
+                                                    <path class="opacity-75" fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                    </path>
+                                                </svg>
                                             </div>
+
                                             <button id="submit-button" type="submit" name="Import"
                                                 class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline send_button">Enviar</button>
                                         </div>

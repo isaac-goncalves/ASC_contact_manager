@@ -32,7 +32,7 @@ window.addEventListener('load', function () {
         const uploadForm = document.getElementById('uploadForm')
 
         //show loading spinner
-        const loadingSpinner = document.getElementById('loading-spinner')
+        const loadingSpinner = document.getElementById('loadingSpinner')
         const submitButton = document.getElementById('submit-button')
 
         uploadForm.addEventListener('submit', function (e) {
@@ -80,20 +80,20 @@ window.addEventListener('load', function () {
 
                         const htmlTemplate = `
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <div class="flex justify-between items-center mr-4">
-                            <p>
-                                Erro ao inserir<strong> ${invalidPhoneCount}</strong> contatos por conterem números inválidos.
-                            </p>
-                            <button id="download-invalid-phone-button"
-                                    class="bg-red-500 hover:bg-red-700 margin-left-4 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-4 text-sm">
-                                Download CSV
-                            </button>
-                            <button class="absolute top-0 right-0 px-2 py-1 text-sm"
-                                    onclick="this.parentElement.parentElement.style.display='none'">
-                                X
-                            </button>
+                            <div class="flex justify-between items-center mr-4">
+                                <p>
+                                    Erro ao inserir<strong> ${invalidPhoneCount}</strong> contatos por conterem números inválidos.
+                                </p>
+                                <button id="download-invalid-phone-button"
+                                        class="bg-red-500 hover:bg-red-700 margin-left-4 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-4 text-sm">
+                                    Download CSV
+                                </button>
+                                <button class="absolute top-0 right-0 px-2 py-1 text-xs"
+                                        onclick="this.parentElement.parentElement.style.display='none'">
+                                    X
+                                </button>
+                            </div>
                         </div>
-                    </div>
                         `
 
                         invalidPhoneDataContainer.insertAdjacentHTML('beforeend', htmlTemplate)
@@ -101,10 +101,9 @@ window.addEventListener('load', function () {
                         setDownloadCSVButton(data.invalidPhoneData)
                     }
 
-                    //download invalid phone data via csv
-                    //hide loading spinner
+                    //hide loading spinner and remove  class from button
                     loadingSpinner.style.display = 'none';
-                    submitButton.disabled = false;
+                    submitButton.classList.remove('disabled')
 
                     // Clear the form fields after successful submission
                     this.reset();
