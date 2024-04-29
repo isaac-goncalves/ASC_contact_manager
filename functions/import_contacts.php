@@ -83,6 +83,8 @@ if (isset($_POST["Import"])) {
 
             $validadeNumber =  validateNumber($telefone);
 
+            //check if number already exists
+
             if (!$validadeNumber) {
                 // Increment invalid phone number count
                 $invalidPhoneCount++;
@@ -99,6 +101,9 @@ if (isset($_POST["Import"])) {
                 );
 
             } else {
+
+                $telefone = preg_replace('/[^0-9]/', '', $telefone);
+
                 // Insert data into the database
                 $sql = "INSERT INTO contacts (nome, sobrenome, email, telefone, endereco, cidade, cep, data_nascimento, campaing_id) 
                         VALUES ('$nome', '$sobrenome', '$email', '$telefone', '$endereco', '$cidade', '$cep', '$data_nascimento', '$campain_id')";

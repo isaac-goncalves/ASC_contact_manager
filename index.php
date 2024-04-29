@@ -9,7 +9,6 @@
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/png" />
 
     <!-- papa js-->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
     <!-- Toastr JS -->
@@ -19,8 +18,6 @@
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- <script src="jquery-3.7.1.min.js"></script> -->
 
     <!-- Custom CSS -->
 
