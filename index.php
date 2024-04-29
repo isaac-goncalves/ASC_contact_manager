@@ -20,6 +20,9 @@
     <!-- <script src="jquery-3.7.1.min.js"></script> -->
 
     <!-- Custom CSS -->
+
+    <link rel="stylesheet" href="./css/global.css">
+
     <style>
         .header-color {
             background-color: var(--e-global-color-primary);
@@ -38,17 +41,6 @@
             background-color: var(--e-global-color-ec068f9);
         }
 
-        :root {
-            --e-global-color-primary: #66197E;
-            --e-global-color-secondary: #0073AD;
-            --e-global-color-text: #5E5E5E;
-            --e-global-color-accent: #66197E;
-            --e-global-color-ec068f9: #E7B829;
-        }
-
-        * {
-            font-family: "Poppins", sans-serif;
-        }
 
         .disabled {
             pointer-events: none;
@@ -56,43 +48,17 @@
         }
     </style>
 
+
 </head>
 
 
 <body class="bg-gray-100">
     <!-- Sidebar -->
     <div class="flex h-screen">
-        <div class="w-60 bg-gray-800 text-white">
-            <div class="p-4">
-                <img src="https://ascsac.com.br/wp-content/uploads/2022/10/logomarca-asc-brasil.svg"
-                    alt="SquareLogo" class="
-                w-100
-                h-18
-                mx-auto
-                mb-4
-                object-cover
-                border-2
-                p-1
-                bg-white
-             ">
-                <img src="https://assets.kmaleon.com.br/files/products/5bf36504ba53c6351509bf81/1542677764600.png"
-                    alt="Avatar" class="
-                w-20
-                h-20
-                mx-auto
-                mb-4
-                rounded-full
-                object-cover
-                border-2
-                border-gray-500
-                p-1
-                bg-white
-             ">
 
-                <?php include 'sidebar.html'; ?>
-                <!-- Add sidebar content here -->
-            </div>
-        </div>
+        <!-- Sidebar -->
+        <?php include 'sidebar.html'; ?>
+
         <!-- Main Content -->
         <div class="flex-1">
             <!-- Header -->

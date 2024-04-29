@@ -1,0 +1,18 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --e-global-color-primary: #66197E;
+    --e-global-color-secondary: #0073AD;
+    --e-global-color-text: #5E5E5E;
+    --e-global-color-accent: #66197E;
+    --e-global-color-ec068f9: #E7B829;
+    --e-global-color-sidebar: #0C3972;
+
+}
+
+.sidebar {
+    background-color: var(--e-global-color-sidebar);
+}
+

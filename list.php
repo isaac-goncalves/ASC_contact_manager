@@ -15,36 +15,12 @@
 
     <!-- <script src="jquery-3.7.1.min.js"></script> -->
 
-    <!-- Custom CSS -->
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./css/global.css">
+
     <style>
         .header-color {
             background-color: var(--e-global-color-primary);
-        }
-
-        .send_button {
-            background-color: var(--e-global-color-primary);
-
-        }
-
-        .send_button:hover {
-            background-color: var(--e-global-color-ec068f9);
-        }
-
-        .send_button>:disabled {
-            background-color: var(--e-global-color-ec068f9);
-        }
-
-        :root {
-            --e-global-color-primary: #66197E;
-            --e-global-color-secondary: #0073AD;
-            --e-global-color-text: #5E5E5E;
-            --e-global-color-accent: #66197E;
-            --e-global-color-ec068f9: #E7B829;
-            --e-global-color-sidebar: #0C3972;
-        }
-
-        .sidebar {
-            background-color: var(--e-global-color-sidebar);
         }
     </style>
 
@@ -54,38 +30,10 @@
 <body class="bg-gray-100">
     <!-- Sidebar -->
     <div class="flex h-screen">
-        <div class="w-64 sidebar text-white">
-            <div class="p-4">
-                <img src="https://assets.kmaleon.com.br/files/products/5bf36504ba53c6351509bf81/1542677764600.png"
-                    alt="SquareLogo" class="
-                w-100
-                h-15
-                mx-auto
-                mb-4
-                object-cover
-                border-2
-                p-1
-                bg-white
-             ">
-                <img src="https://assets.kmaleon.com.br/files/products/5bf36504ba53c6351509bf81/1542677764600.png"
-                    alt="Avatar" class="
-                w-20
-                h-20
-                mx-auto
-                mb-4
-                rounded-full
-                object-cover
-                border-2
-                border-gray-500
-                p-1
-                bg-white
-             ">
 
-                <!-- Add sidebar content here -->
-                <?php include 'sidebar.html'; ?>
+        <!-- Sidebar -->
+        <?php include 'sidebar.html'; ?>
 
-            </div>
-        </div>
         <!-- Main Content -->
         <div class="flex-1">
             <!-- Header -->
