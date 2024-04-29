@@ -40,6 +40,11 @@
             --e-global-color-text: #5E5E5E;
             --e-global-color-accent: #66197E;
             --e-global-color-ec068f9: #E7B829;
+            --e-global-color-sidebar: #0C3972;
+        }
+
+        .sidebar {
+            background-color: var(--e-global-color-sidebar);
         }
     </style>
 
@@ -49,12 +54,12 @@
 <body class="bg-gray-100">
     <!-- Sidebar -->
     <div class="flex h-screen">
-        <div class="w-64 bg-gray-800 text-white">
+        <div class="w-64 sidebar text-white">
             <div class="p-4">
                 <img src="https://assets.kmaleon.com.br/files/products/5bf36504ba53c6351509bf81/1542677764600.png"
                     alt="SquareLogo" class="
                 w-100
-                h-18
+                h-15
                 mx-auto
                 mb-4
                 object-cover
@@ -106,7 +111,8 @@
                 <div class="flex justify-center">
 
                     <div class="w-90">
-                        <label for="contacts" class="block text-sm font-medium text-gray-700">Selecione uma Campanha</label>
+                        <label for="contacts" class="block text-sm font-medium text-gray-700">Selecione uma
+                            Campanha</label>
 
                         <select id="contacts" name="contacts" class="select2 w-full mt-1">
                             <option value="1">Campanha 1</option>
@@ -115,7 +121,7 @@
                             <option value="4">Campanha 4</option>
                             <option value="5">Campanha 5</option>
                         </select>
-            
+
                         <?php
                         include 'fetch_data.php';
                         ?>

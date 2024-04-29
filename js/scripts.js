@@ -25,7 +25,7 @@ window.addEventListener('load', function () {
             loadingSpinner.style.display = 'block';
             //add tailwind disabled class to button
             submitButton.classList.add('disabled')
-            submitButton.disabled = true;
+            //submitButton.disabled = true;
 
             const formData = new FormData(this)
             formData.append('Import', 'true')

@@ -12,14 +12,15 @@ if (isset($_POST["Import"])) {
     $con = getdb();
 
     $fileInput = $_FILES["fileInput"]["tmp_name"];
-    $campaign = $_POST['campaign'];
+    $campaing = $_POST['campaing'];
     $successCount = 0; // Initialize success count
     $duplicateCount = 0; // Initialize duplicate count
     $invalidPhoneCount = 0; // Initialize invalid phone number count
     $firstRow = true;
     $error;
+    $invalidPhoneData = array();
 
-    if ($campaign == "") {
+    if ($campaing == "") {
         $error = "Por favor, insira o nome da campanha.";
     }
     
@@ -38,6 +39,21 @@ if (isset($_POST["Import"])) {
         $file = fopen($fileInput, "r");
 
         // error_log("Amount of rows in csv is ");
+
+        //verify if campaing already exists
+        $sql = "SELECT * FROM campaings WHERE nome = '$campaing'";
+        $result = mysqli_query($con, $sql);
+        $campain_id = null;
+        while ($row = mysqli_fetch_assoc($result)) {
+            $campain_id = $row['id'];
+        }
+
+        if ($campain_id == null) {
+            $sql = "INSERT INTO campaings (nome) VALUES ('$campaing')";
+            if (mysqli_query($con, $sql)) {
+                $campain_id = mysqli_insert_id($con);
+            }
+        }
 
         while (($getData = fgetcsv($file, 100000, ";")) !== false) {
 
@@ -65,10 +81,23 @@ if (isset($_POST["Import"])) {
             if (!preg_match('/^55\d{2}\d{4,5}\d{4}$/', $telefone)) {
                 // Increment invalid phone number count
                 $invalidPhoneCount++;
+                // Add invalid phone number data to array
+                $invalidPhoneData[] = array(
+                    'nome' => $nome,
+                    'sobrenome' => $sobrenome,
+                    'email' => $email,
+                    'telefone' => $telefone,
+                    'endereco' => $endereco,
+                    'cidade' => $cidade,
+                    'cep' => $cep,
+                    'data_nascimento' => $data_nascimento,
+                );
+
+
             } else {
                 // Insert data into the database
-                $sql = "INSERT INTO contacts (nome, sobrenome, email, telefone, endereco, cidade, cep, data_nascimento) 
-                        VALUES ('$nome', '$sobrenome', '$email', '$telefone', '$endereco', '$cidade', '$cep', '$data_nascimento')";
+                $sql = "INSERT INTO contacts (nome, sobrenome, email, telefone, endereco, cidade, cep, data_nascimento, campaing_id) 
+                        VALUES ('$nome', '$sobrenome', '$email', '$telefone', '$endereco', '$cidade', '$cep', '$data_nascimento', '$campain_id')";
 
                 if (mysqli_query($con, $sql)) {
                     // Check if the insertion was successful
@@ -90,6 +119,7 @@ if (isset($_POST["Import"])) {
             'successAmount' => $successCount,
             'infoAmount' => $duplicateCount,
             'errorAmount' => $invalidPhoneCount,
+            'invalidPhoneData' => $invalidPhoneData
         );
 
         // Encode the data into JSON format
