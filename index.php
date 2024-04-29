@@ -133,11 +133,11 @@
                 </div>
             </div>
 
+            <!-- Main JS -->
             <script type="text/javascript" src="js/scripts.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-            <!-- No Bootstrap JS needed with Tailwind CSS -->
 </body>
 
 
