@@ -50,7 +50,7 @@ window.addEventListener('load', function () {
                 console.log(key + ': ' + value);
             });
 
-            fetch('./functions.php', {
+            fetch('./functions/import_contacts.php', {
                 method: 'POST',
                 body: formData
             })
@@ -84,8 +84,8 @@ window.addEventListener('load', function () {
                             <p>
                                 Erro ao inserir<strong> ${invalidPhoneCount}</strong> contatos por conterem números inválidos.
                             </p>
-                            <button id="download-invalid-phone-button margin-left-4"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-4 text-sm">
+                            <button id="download-invalid-phone-button"
+                                    class="bg-red-500 hover:bg-red-700 margin-left-4 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-4 text-sm">
                                 Download CSV
                             </button>
                             <button class="absolute top-0 right-0 px-2 py-1 text-sm"
@@ -97,32 +97,11 @@ window.addEventListener('load', function () {
                         `
 
                         invalidPhoneDataContainer.insertAdjacentHTML('beforeend', htmlTemplate)
+
+                        setDownloadCSVButton(data.invalidPhoneData)
                     }
 
                     //download invalid phone data via csv
-                    const invalidPhoneData = data.invalidPhoneData
-
-                    const DownloadInvalidPhoneButton = document.getElementById('download-invalid-phone-button')
-
-
-                    DownloadInvalidPhoneButton.addEventListener('click', function () {
-                        try {
-                            const csv = Papa.unparse(invalidPhoneData)
-                            const blob = new Blob([csv], { type: 'text/csv' })
-                            const url = URL.createObjectURL(blob)
-                            const a = document.createElement('a')
-                            const currentDate = new Date().toISOString().slice(0, 10)
-
-                            a.setAttribute('href', url)
-                            a.setAttribute('download', `invalid_phone_data_${currentDate}.csv`)
-                            a.click()
-
-                        } catch (error) {
-                            console.error(error)
-                            toastr.error('An error occurred while downloading the invalid phone data.')
-                        }
-                    })
-
                     //hide loading spinner
                     loadingSpinner.style.display = 'none';
                     submitButton.disabled = false;
@@ -139,6 +118,28 @@ window.addEventListener('load', function () {
         });
     }
 
+    function setDownloadCSVButton(data) {
+
+        const downloadInvalidPhoneButton = document.getElementById('download-invalid-phone-button')
+
+        downloadInvalidPhoneButton.addEventListener('click', function () {
+            try {
+                const csv = Papa.unparse(data)
+                const blob = new Blob([csv], { type: 'text/csv' })
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                const currentDate = new Date().toISOString().slice(0, 10)
+
+                a.setAttribute('href', url)
+                a.setAttribute('download', `invalid_phone_data_${currentDate}.csv`)
+                a.click()
+
+            } catch (error) {
+                console.error(error)
+                toastr.error('An error occurred while downloading the invalid phone data.')
+            }
+        })
+    }
 
 
     function showSuccessMessage(amount) {

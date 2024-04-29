@@ -1,6 +1,6 @@
 <?php
 // Include database connection code
-include 'config.php';
+include './config/config.php';
 
 $conn = getdb();
 
